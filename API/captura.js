@@ -20,16 +20,18 @@ botao.addEventListener("click", () => {
 
     //Obter a imagem como URL de dados
     const imageDataURL = canvas.toDataURL("image/png");
+    //Converter a URL de dados para uma string base64
     enviarImagemParaServidor(imageDataURL);
 })
 //Função para enviar a imagem para o servidor
 function enviarImagemParaServidor(imageDataURL){
     //Simular o envio para o servidor 
     console.log("Enviando imagem para o servidor... ", imageDataURL);
+    const base64String = imageDataURL.split(',')[1];
 
-    fetch("/",{
+    fetch("http://DOP3080-1247456:8000/images",{
         method: "POST",
-        body: JSON.stringify({ image: imageDataURL }),
+        body: JSON.stringify({ image: base64String, mime_type: 'image/png' }),
         headers: {
             "Content-Type": "application/json"
         }
